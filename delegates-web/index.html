@@ -13,10 +13,10 @@
         body,
         main {
             height: 100%;
-            overflow: hidden;
+            /* overflow: hidden; */
         }
 
-        img {
+        img.en-construccion {
             opacity: .3;
         }
 
@@ -25,28 +25,47 @@
             color: black;
             text-shadow: 5px 7px 10px #8c4646;
         }
+
+        #container.fluid .item {
+            width: 46.9%;
+            margin: 3px 1px 3px 1px;
+        }
+
+        #container.fluid .item img {
+            display: block;
+            width: 100%;
+            height: auto !important;
+            opacity: 1;
+        }
     </style>
 
 </head>
 
 <body>
-    <main class="d-flex flex-column justify-content-center align-items-center">
+    <!-- <main class="d-flex flex-column justify-content-center align-items-center">
         <div class="text-center position-absolute">
             <h2>Asamblea Internacional</h2>
             <h2>Buenos Aires 2019</h2>
             <h2>Cong. Villa Pueyrredón</h2>
             <h2>En Construcción</h2>
         </div>
-        <img class="img-fluid col-sm-12 col-md-8 col-xl-6" src="./floralis-generica.png" alt="Florais Genérica">
-    </main>
+        <img class="en-construccion img-fluid col-sm-12 col-md-8 col-xl-6" src="./floralis-generica.png" alt="Florais Genérica">
+    </main> -->
+    <div id="container" class="fluid"></div>
 </body>
+<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    crossorigin="anonymous"></script>
+<script src="jquery.masonry.js"></script>
+<script src="imagesloaded.pkgd.min.js"></script>
+<script src="jquery.lazy.min.js"></script>
+<script src="main.js"></script>
 <script>
-    window.onload = function () {
-        var script = document.createElement('script');
-        script.type = 'text/javascript';
-        script.src = './main.js?' + Math.random();
-        document.body.appendChild(script);
-    }
+    $(function () {
+        // $('<script>').attr({
+        //     type: 'text/javascript',
+        //     src: './main.js?' + Math.random()
+        // }).appendTo('body');
+    });
 </script>
 
 </html>
