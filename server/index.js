@@ -82,6 +82,16 @@ async function execute(auth) {
             }, (err, res) => {
                 if (err) return reject(err);
                 files.push(...res.data.files);
+
+                // files.forEach(({ id }) => getThumbnail(id).then(result => {
+                //     console.log(result);
+                // }));
+
+                // getThumbnail(files[0].id).then(result => {
+                //     console.log(result);
+                // })
+
+
                 if (res.data.nextPageToken) {
                     return _execute(files, res.data.nextPageToken)
                         .then(resolve);
@@ -89,6 +99,18 @@ async function execute(auth) {
                 return resolve(files);
             });
         })
+    }
+
+    function getThumbnail(fileId) {
+        return new Promise((resolve, reject) => {
+            drive.files.get({
+                fileId,
+                fields: '*'
+            }, (err, result) => {
+                if (err) return reject(err);
+                return resolve(result.data);
+            })
+        });
     }
 }
 
