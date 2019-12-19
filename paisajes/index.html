@@ -72,51 +72,43 @@
     <script>
 
         $(() => {
-            getFiles().then(files => initialize(files.sort(() => Math.random() - 0.5)));
-
-            function initialize(files) {
-
-                files.forEach(file => $(`
-                    <div data-background="https://drive.google.com/uc?export=view&id=${file.id}" class="swiper-slide swiper-lazy">
+            ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '16', '17', '19']
+                .sort(() => Math.random() - 0.5)
+                .forEach(image => $(`
+                    <div data-background="images/${image}.jpg" class="swiper-slide swiper-lazy">
                         <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
                     </div>`).appendTo('.gallery-top .swiper-wrapper'));
 
-                var galleryTop = new Swiper('.gallery-top', {
-                    speed: 1000,
-                    preloadImages: false,
-                    keyboard: {
-                        enabled: true,
-                        onlyInViewport: false,
-                    },
-                    mousewheel: {
-                        invert: true,
-                    },
-                    autoplay: {
-                        delay: 5000,
-                        disableOnInteraction: false
-                    },
-                    navigation: {
-                        nextEl: '.swiper-button-next',
-                        prevEl: '.swiper-button-prev',
-                    },
-                    fadeEffect: {
-                        crossFade: true
-                    },
-                    lazy: {
-                        loadOnTransitionStart: true,
-                        loadPrevNext: true,
-                        loadPrevNextAmount: 2
-                    }
-                });
+            var galleryTop = new Swiper('.gallery-top', {
+                speed: 2000,
+                preloadImages: false,
+                keyboard: {
+                    enabled: true,
+                    onlyInViewport: false,
+                },
+                mousewheel: {
+                    invert: true,
+                },
+                autoplay: {
+                    delay: 10000,
+                    disableOnInteraction: false
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                fadeEffect: {
+                    crossFade: true
+                },
+                lazy: {
+                    loadOnTransitionStart: true,
+                    loadPrevNext: true,
+                    loadPrevNextAmount: 2
+                }
+            });
 
-                document.querySelector('body').requestFullscreen();
-            }
+            document.querySelector('body').requestFullscreen();
         });
-
-        function getFiles() {
-            return fetch('./files.json?' + Math.random())
-                .then(res => res.json())
-        }
     </script>
 </body>
 
