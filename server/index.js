@@ -75,22 +75,13 @@ async function execute(auth) {
     function _execute(files = [], pageToken = null) {
         return new Promise((resolve, reject) => {
             drive.files.list({
-                q: "mimeType='image/jpeg' and '1J6DyrdptoqWnkj5Wg67zmEUiFGu2sGCg' in parents",
+                q: "mimeType='image/jpeg' and '1mV6Yh0EqRQjbe0fr9CJ9UJ8ZAnh7bnGn' in parents",
                 fields: 'nextPageToken, files(id, name)',
                 spaces: 'drive',
                 pageToken
             }, (err, res) => {
                 if (err) return reject(err);
                 files.push(...res.data.files);
-
-                // files.forEach(({ id }) => getThumbnail(id).then(result => {
-                //     console.log(result);
-                // }));
-
-                // getThumbnail(files[0].id).then(result => {
-                //     console.log(result);
-                // })
-
 
                 if (res.data.nextPageToken) {
                     return _execute(files, res.data.nextPageToken)
@@ -116,7 +107,7 @@ async function execute(auth) {
 
 function createJson(files) {
     return new Promise((resolve, reject) => {
-        const filename = './delegates-web/files.json';
+        const filename = './agasajo/files.json';
         fs.writeFile(filename, JSON.stringify(files), 'utf8', (err) => {
             if (err) return reject(err);
             return resolve();
