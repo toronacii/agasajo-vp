@@ -72,58 +72,76 @@
         <div class="swiper-wrapper"></div>
     </div>
 
+    <script src="jquery-3.4.1.min.js"></script>
     <!-- Swiper JS -->
     <script src="swiper.min.js"></script>
 
     <!-- Initialize Swiper -->
     <script>
 
-        getFiles().then(initialize);
+        $(() => {
+            getFiles().then(initialize);
 
-        function initialize(files) {
+            function initialize(files) {
 
-            const photos = document.querySelector('.gallery-top .swiper-wrapper');
-            const thumbnails = document.querySelector('.gallery-thumbs .swiper-wrapper');
+                const photos = document.querySelector('.gallery-top .swiper-wrapper');
+                const thumbnails = document.querySelector('.gallery-thumbs .swiper-wrapper');
 
-            files.slice(0, 10).forEach(file => {
-                photos.appendChild(createItem(file));
-                thumbnails.appendChild(createItem(file));
-            });
+                files.forEach(file => {
+                    $lazy = $(`
+                        <div data-background="https://drive.google.com/uc?export=view&id=${file.id}" class="swiper-slide swiper-lazy">
+                            <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
+                        </div>`);
 
-            var galleryThumbs = new Swiper('.gallery-thumbs', {
-                spaceBetween: 10,
-                slidesPerView: 4,
-                freeMode: true,
-                watchSlidesVisibility: true,
-                watchSlidesProgress: true,
-            });
+                    $lazy.appendTo(photos);
+                    $lazy.clone().appendTo(thumbnails);
+                });
 
-            var galleryTop = new Swiper('.gallery-top', {
-                speed: 1000,
-                spaceBetween: 100,
-                keyboard: {
-                    enabled: true,
-                    onlyInViewport: false,
-                },
-                mousewheel: {
-                    invert: true,
-                },
-                autoplay: {
-                    delay: 5000,
-                    disableOnInteraction: false
-                },
-                navigation: {
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev',
-                },
-                fadeEffect: {
-                    crossFade: true
-                },
-                thumbs: {
-                    swiper: galleryThumbs
+                const lazy = {
+                    loadOnTransitionStart: true,
+                    loadPrevNext: true,
+                    loadPrevNextAmount: 2
                 }
-            });
-        }
+
+                var galleryThumbs = new Swiper('.gallery-thumbs', {
+                    spaceBetween: 10,
+                    slidesPerView: 4,
+                    freeMode: true,
+                    watchSlidesVisibility: true,
+                    watchSlidesProgress: true,
+                    preloadImages: false,
+                    lazy
+                });
+
+                var galleryTop = new Swiper('.gallery-top', {
+                    speed: 1000,
+                    spaceBetween: 100,
+                    preloadImages: false,
+                    lazy,
+                    keyboard: {
+                        enabled: true,
+                        onlyInViewport: false,
+                    },
+                    mousewheel: {
+                        invert: true,
+                    },
+                    autoplay: {
+                        delay: 5000,
+                        disableOnInteraction: false
+                    },
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                    },
+                    fadeEffect: {
+                        crossFade: true
+                    },
+                    thumbs: {
+                        swiper: galleryThumbs
+                    }
+                });
+            }
+        });
 
         function getFiles() {
             return fetch('./files.json?' + Math.random())
