@@ -75,7 +75,7 @@ async function execute(auth) {
     function _execute(files = [], pageToken = null) {
         return new Promise((resolve, reject) => {
             drive.files.list({
-                q: "mimeType='image/jpeg' and '1mV6Yh0EqRQjbe0fr9CJ9UJ8ZAnh7bnGn' in parents",
+                q: "mimeType='image/jpeg' and '1VG8WiRExaiFgqv1EiGG8FhiEtujTP-se' in parents and name contains 'AGAF'",
                 fields: 'nextPageToken, files(id, name)',
                 spaces: 'drive',
                 pageToken
@@ -107,7 +107,7 @@ async function execute(auth) {
 
 function createJson(files) {
     return new Promise((resolve, reject) => {
-        const filename = './agasajo/files.json';
+        const filename = './web/assets/files.json';
         fs.writeFile(filename, JSON.stringify(files), 'utf8', (err) => {
             if (err) return reject(err);
             return resolve();
